@@ -1,4 +1,0 @@
-BBS
-===
-
-bbs of szgdut
