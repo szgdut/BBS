@@ -79,7 +79,11 @@
 							<td class="pslt"><input class="pr" type="$optiontype" id="option_$key" name="pollanswers[]" value="$option[polloptionid]" {if $_G['forum_thread']['is_archived']}disabled="disabled"{/if} {if $optiontype=='checkbox'}onclick="poll_checkbox(this)"{else}onclick="$('pollsubmit').disabled = false"{/if} /></td>
 						<!--{/if}-->
 						<td class="pvt">
-							<label for="option_$key">$key. &nbsp;$option[polloption]</label>
+							<label for="option_$key">$key. &nbsp;$option[polloption]
+							<!--{if $expiration && $expirations < TIMESTAMP && !empty($option[optionremark])}-->
+								&nbsp;--&nbsp;$option[optionremark]
+							<!--{/if}-->
+							</label>
 						</td>
 						<td class="pvts"></td>
 					</tr>
