@@ -5,6 +5,10 @@
  *      This is NOT a freeware, use is subject to license terms
  *
  *      $Id: thread_poll.php 31107 2012-07-17 07:48:13Z zhengqingpeng $
+ *      
+ *      Date: 2014-07-03
+ *      Author: leonshao
+ *      Description: Get optionremark from table forum_polloption to display
  */
 
 if(!defined('IN_DISCUZ')) {
@@ -45,8 +49,9 @@ if($count = C::t('forum_polloption')->fetch_count_by_tid($_G['tid'])) {
 		}
 		$polloptions[$opts++] = array
 		(
-			'polloptionid'	=> $options['polloptionid'],
-			'polloption'	=> $option,
+			'polloptionid'		=> $options['polloptionid'],
+			'polloption'		=> $option,
+			'optionremark' 		=> $options['optionremark'],
 			'votes'		=> $options['votes'],
 			'width'		=> $options['votes'] > 0 ? (@round($options['votes'] * 100 / $count['total'])).'%' : '8px',
 			'percent'	=> @sprintf("%01.2f", $options['votes'] * 100 / $count['total']),

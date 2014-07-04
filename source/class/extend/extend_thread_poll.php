@@ -5,6 +5,14 @@
  *      This is NOT a freeware, use is subject to license terms
  *
  *      $Id: extend_thread_poll.php 31107 2012-07-17 07:48:13Z zhengqingpeng $
+ *      
+ *      Date: 2014-07-03
+ *      Author: leonshao
+ *      Description: 
+ *      	1. In function before_newthread(), similar to $polloption, get optionremark
+ *             from $_GET
+ *          2. In function after_newthread(), insert the option remark value besides the 
+ *             poll option
  */
 
 if(!defined('IN_DISCUZ')) {
@@ -25,6 +33,11 @@ class extend_thread_poll extends extend_thread_base {
 				unset($polloption[$key]);
 			}
 		}
+		
+		$optionremark = $_GET['optionremark'];
+		foreach($optionremark as $key => $value) {
+			$optionremark[$key] = censor($optionremark[$key]);
+		}
 
 		$maxpolloptions = $this->setting['maxpolloptions'];
 		if(count($polloption) > $maxpolloptions) {
@@ -37,6 +50,7 @@ class extend_thread_poll extends extend_thread_base {
 		$this->pollarray['maxchoices'] = empty($_GET['maxchoices']) ? 0 : ($_GET['maxchoices'] > $curpolloption ? $curpolloption : $_GET['maxchoices']);
 		$this->pollarray['multiple'] = empty($_GET['maxchoices']) || $_GET['maxchoices'] == 1 ? 0 : 1;
 		$this->pollarray['options'] = $polloption;
+		$this->pollarray['optionremarks'] = $optionremark;
 		$this->pollarray['visible'] = empty($_GET['visibilitypoll']);
 		$this->pollarray['overt'] = !empty($_GET['overt']);
 		$this->pollarray['pollimage'] = $_GET['pollimage'];
@@ -59,7 +73,8 @@ class extend_thread_poll extends extend_thread_base {
 	public function after_newthread() {
 		foreach($this->pollarray['options'] as $ppkey => $polloptvalue) {
 			$polloptvalue = dhtmlspecialchars(trim($polloptvalue));
-			$polloptionid = C::t('forum_polloption')->insert(array('tid' => $this->tid, 'polloption' => $polloptvalue), true);
+			$optremarkvalue = dhtmlspecialchars(trim($this->pollarray['optionremarks'][$ppkey]));
+			$polloptionid = C::t('forum_polloption')->insert(array('tid' => $this->tid, 'polloption' => $polloptvalue, 'optionremark' => $optremarkvalue), true);
 			if($this->pollarray['pollimage'][$ppkey]) {
 				C::t('forum_polloption_image')->update($this->pollarray['pollimage'][$ppkey], array('poid' => $polloptionid, 'tid' => $this->tid, 'pid' => $this->pid));
 				$this->pollarray['isimage'] = 1;
