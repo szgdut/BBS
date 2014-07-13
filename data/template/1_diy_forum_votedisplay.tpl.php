@@ -1,12 +1,11 @@
-<?php if(!defined('IN_DISCUZ')) exit('Access Denied'); hookscriptoutput('forumdisplay');
+<?php if(!defined('IN_DISCUZ')) exit('Access Denied'); hookscriptoutput('votedisplay');
 0
-|| checktplrefresh('data/diy/./template/default//forum/forumdisplay.htm', './template/default/forum/forumdisplay_leftside.htm', 1404635632, 'diy', './data/template/1_diy_forum_forumdisplay.tpl.php', 'data/diy/./template/default/', 'forum/forumdisplay')
-|| checktplrefresh('data/diy/./template/default//forum/forumdisplay.htm', './template/default/forum/recommend.htm', 1404635632, 'diy', './data/template/1_diy_forum_forumdisplay.tpl.php', 'data/diy/./template/default/', 'forum/forumdisplay')
-|| checktplrefresh('data/diy/./template/default//forum/forumdisplay.htm', './template/default/common/seccheck.htm', 1404635632, 'diy', './data/template/1_diy_forum_forumdisplay.tpl.php', 'data/diy/./template/default/', 'forum/forumdisplay')
-|| checktplrefresh('data/diy/./template/default//forum/forumdisplay.htm', './template/default/forum/forumdisplay_list.htm', 1404635632, 'diy', './data/template/1_diy_forum_forumdisplay.tpl.php', 'data/diy/./template/default/', 'forum/forumdisplay')
-|| checktplrefresh('data/diy/./template/default//forum/forumdisplay.htm', './template/default/forum/forumdisplay_sort.htm', 1404635632, 'diy', './data/template/1_diy_forum_forumdisplay.tpl.php', 'data/diy/./template/default/', 'forum/forumdisplay')
-|| checktplrefresh('data/diy/./template/default//forum/forumdisplay.htm', './template/default/forum/search_sortoption.htm', 1404635632, 'diy', './data/template/1_diy_forum_forumdisplay.tpl.php', 'data/diy/./template/default/', 'forum/forumdisplay')
-|| checktplrefresh('data/diy/./template/default//forum/forumdisplay.htm', './template/default/forum/search_sortoption.htm', 1404635632, 'diy', './data/template/1_diy_forum_forumdisplay.tpl.php', 'data/diy/./template/default/', 'forum/forumdisplay')
+|| checktplrefresh('./template/default/forum/votedisplay.htm', './template/default/forum/recommend.htm', 1404631604, 'diy', './data/template/1_diy_forum_votedisplay.tpl.php', './template/default', 'forum/votedisplay')
+|| checktplrefresh('./template/default/forum/votedisplay.htm', './template/default/common/seccheck.htm', 1404631604, 'diy', './data/template/1_diy_forum_votedisplay.tpl.php', './template/default', 'forum/votedisplay')
+|| checktplrefresh('./template/default/forum/votedisplay.htm', './template/default/forum/votedisplay_list.htm', 1404631604, 'diy', './data/template/1_diy_forum_votedisplay.tpl.php', './template/default', 'forum/votedisplay')
+|| checktplrefresh('./template/default/forum/votedisplay.htm', './template/default/forum/forumdisplay_sort.htm', 1404631604, 'diy', './data/template/1_diy_forum_votedisplay.tpl.php', './template/default', 'forum/votedisplay')
+|| checktplrefresh('./template/default/forum/votedisplay.htm', './template/default/forum/search_sortoption.htm', 1404631604, 'diy', './data/template/1_diy_forum_votedisplay.tpl.php', './template/default', 'forum/votedisplay')
+|| checktplrefresh('./template/default/forum/votedisplay.htm', './template/default/forum/search_sortoption.htm', 1404631604, 'diy', './data/template/1_diy_forum_votedisplay.tpl.php', './template/default', 'forum/votedisplay')
 ;?><?php include template('common/header'); if($_G['forum']['ismoderator']) { ?>
 <script src="<?php echo $_G['setting']['jspath'];?>forum_moderate.js?<?php echo VERHASH;?>" type="text/javascript"></script>
 <?php } ?>
@@ -20,72 +19,13 @@
 <!--[diy=diy1]--><div id="diy1" class="area"></div><!--[/diy]-->
 </div>
 <div class="boardnav">
-<div id="ct" class="wp cl<?php if($_G['forum']['allowside']) { ?> ct2<?php } ?>"<?php if($leftside) { ?> style="margin-left:<?php echo $_G['leftsidewidth_mwidth'];?>px"<?php } ?>>
-<?php if($leftside) { ?>
-<div id="sd_bdl" class="bdl" onmouseover="showMenu({'ctrlid':this.id, 'pos':'dz'});" style="width:<?php echo $_G['setting']['leftsidewidth'];?>px;margin-left:-<?php echo $_G['leftsidewidth_mwidth'];?>px">
-<?php if(!empty($_G['setting']['pluginhooks']['forumdisplay_leftside_top'])) echo $_G['setting']['pluginhooks']['forumdisplay_leftside_top'];?>
-<!--[diy=diyleftsidetop]--><div id="diyleftsidetop" class="area"></div><!--[/diy]-->
-
-<div class="tbn" id="forumleftside"><?php if($leftside['favorites']) { ?>
-<h2 class="mbn"><a href="home.php?mod=space&amp;do=favorite&amp;type=forum">收藏的版块</a></h2>
-<dl id="lf_fav" class="bdl_fav mbm"><?php if(is_array($leftside['favorites'])) foreach($leftside['favorites'] as $favfid => $fdata) { ?><dd>
-<?php if(!empty($_G['cache']['forums'][$favfid]['domain']) && !empty($_G['setting']['domain']['root']['forum'])) { ?>
-<a href="http://<?php echo $_G['cache']['forums'][$favfid]['domain'];?>.<?php echo $_G['setting']['domain']['root']['forum'];?>" title="<?php echo $fdata['0'];?>"><?php echo $fdata['0'];?></a>
-<?php } else { ?>
-<a href="forum.php?mod=forumdisplay&amp;fid=<?php echo $favfid;?>"><?php echo $fdata['0'];?></a>
-<?php } ?>
-
-</dd>
-<?php } ?>
-</dl>
-<?php } else { ?>
-<h2 class="bdl_h">版块导航</h2>
-<?php } if(is_array($leftside['forums'])) foreach($leftside['forums'] as $upfid => $gdata) { ?><dl class="<?php if($fgroupid == $upfid || $_G['setting']['leftsideopen']) { ?>a<?php } ?>" id="lf_<?php echo $upfid;?>">
-<dt><a href="javascript:;" hidefocus="true" onclick="leftside('lf_<?php echo $upfid;?>')" title="<?php echo $gdata['name'];?>"><?php echo $gdata['name'];?></a></dt><?php if(is_array($gdata['sub'])) foreach($gdata['sub'] as $subfid => $name) { ?><dd<?php if($_G['fid'] == $subfid || $_G['forum']['fup'] == $subfid) { ?> class="bdl_a"<?php } ?>>
-<?php if(!empty($_G['cache']['forums'][$subfid]['domain']) && !empty($_G['setting']['domain']['root']['forum'])) { ?>
-<a href="http://<?php echo $_G['cache']['forums'][$subfid]['domain'];?>.<?php echo $_G['setting']['domain']['root']['forum'];?>" title="<?php echo $name;?>"><?php echo $name;?></a>
-<?php } else { ?>
-<a href="forum.php?mod=forumdisplay&amp;fid=<?php echo $subfid;?>" title="<?php echo $name;?>"><?php echo $name;?></a>
-<?php } ?>
-</dd>
-<?php } ?>
-</dl>
-<?php } ?></div>
-
-<!--[diy=diyleftsidebottom]--><div id="diyleftsidebottom" class="area"></div><!--[/diy]-->
-<?php if(!empty($_G['setting']['pluginhooks']['forumdisplay_leftside_bottom'])) echo $_G['setting']['pluginhooks']['forumdisplay_leftside_bottom'];?>
-</div>
-<?php } ?>
-
+<div id="ct" class="wp cl<?php if($_G['forum']['allowside']) { ?> ct2<?php } ?>">
 <div class="mn">
 <div class="bm bml pbn">
 <?php if($_G['forum']['banner'] && !$subforumonly) { ?><img src="<?php echo $_G['forum']['banner'];?>" alt="<?php echo $_G['forum']['name'];?>" /><?php } ?>
 <div class="bm_h cl">
-<?php if($_G['page'] == 1 && $_G['forum']['rules']) { ?><span class="o"><img id="forum_rules_<?php echo $_G['fid'];?>_img" src="<?php echo IMGDIR;?>/collapsed_<?php echo $collapse['forum_rulesimg'];?>.gif" title="收起/展开" alt="收起/展开" onclick="toggle_collapse('forum_rules_<?php echo $_G['fid'];?>')" /></span><?php } ?>
-<span class="y">
-<a href="home.php?mod=spacecp&amp;ac=favorite&amp;type=forum&amp;id=<?php echo $_G['fid'];?>&amp;handlekey=favoriteforum&amp;formhash=<?php echo FORMHASH;?>" id="a_favorite" class="fa_fav" onclick="showWindow(this.id, this.href, 'get', 0);">收藏本版 <strong class="xi1" id="number_favorite" <?php if(!$_G['forum']['favtimes']) { ?> style="display:none;"<?php } ?>>(<span id="number_favorite_num"><?php echo $_G['forum']['favtimes'];?></span>)</strong></a>
-<?php if(rssforumperm($_G['forum']) && $_G['setting']['rssstatus'] && !$_GET['archiveid'] && !$subforumonly) { ?><span class="pipe">|</span><a href="forum.php?mod=rss&amp;fid=<?php echo $_G['fid'];?>&amp;auth=<?php echo $rssauth;?>" class="fa_rss" target="_blank" title="RSS">订阅</a><?php } if(!empty($forumarchive)) { ?>
-<span class="pipe">|</span><a id="forumarchive" href="javascript:;" class="fa_achv" onmouseover="showMenu(this.id)"><?php if($_GET['archiveid']) { ?><?php echo $forumarchive[$_GET['archiveid']]['displayname'];?><?php } else { ?>存档<?php } ?></a>
-<?php } ?>
-<?php if(!empty($_G['setting']['pluginhooks']['forumdisplay_forumaction'])) echo $_G['setting']['pluginhooks']['forumdisplay_forumaction'];?>
-
-<?php if($_G['forum']['ismoderator']) { if($_G['forum']['recyclebin']) { ?>
-<span class="pipe">|</span><a href="<?php if($_G['adminid'] == 1) { ?>admin.php?mod=forum&action=recyclebin&frames=yes<?php } elseif($_G['forum']['ismoderator']) { ?>forum.php?mod=modcp&action=recyclebin&fid=<?php echo $_G['fid'];?><?php } ?>" class="fa_bin" target="_blank">回收站</a>
-<?php } if($_G['forum']['ismoderator'] && !$_GET['archiveid']) { ?>
-<span class="pipe">|</span><strong>
-<?php if($_G['forum']['status'] != 3) { ?>
-<a href="forum.php?mod=modcp&amp;fid=<?php echo $_G['fid'];?>">管理面板</a>
-<?php } else { ?>
-<a href="forum.php?mod=group&amp;action=manage&amp;fid=<?php echo $_G['fid'];?>">管理面板</a>
-<?php } ?>
-</strong>
-<?php } ?>
-<?php if(!empty($_G['setting']['pluginhooks']['forumdisplay_modlink'])) echo $_G['setting']['pluginhooks']['forumdisplay_modlink'];?>
-<?php } ?>
-</span>
 <h1 class="xs2">
 <a href="forum.php?mod=forumdisplay&amp;fid=<?php echo $_G['fid'];?>"><?php echo $_G['forum']['name'];?></a>
-<?php if(!$subforumonly) { ?><span class="xs1 xw0 i">今日: <strong class="xi1"><?php echo $_G['forum']['todayposts'];?></strong><?php if($_G['forum']['todayposts']) { if($_G['forum']['todayposts'] < $_G['forum']['yesterdayposts']) { ?><b class="ico_fall">&nbsp;</b><?php } else { ?><b class="ico_increase">&nbsp;</b><?php } } ?><span class="pipe">|</span>主题: <strong class="xi1"><?php echo $_G['forum']['threads'];?></strong><?php if($_G['forum']['rank']) { ?><span class="pipe">|</span>排名: <strong class="xi1" title="上次排名:<?php echo $_G['forum']['oldrank'];?>"><?php echo $_G['forum']['rank'];?></strong><?php if($_G['forum']['rank'] <= $_G['forum']['oldrank']) { ?><b class="ico_increase">&nbsp;</b><?php } else { ?><b class="ico_fall">&nbsp;</b><?php } } ?></span><?php } ?>
 </h1>
 </div>
 <?php if((!empty($_G['forum']['domain']) && !empty($_G['setting']['domain']['root']['forum'])) || $moderatedby || ($_G['page'] == 1 && $_G['forum']['rules'])) { ?>
@@ -435,13 +375,13 @@ getnewlivepostlist();
 }
 </script>
 <?php } ?>
-
 <div id="pgt" class="bm bw0 pgs cl">
 <span id="fd_page_top"><?php echo $multipage;?></span>
 <span class="pgb y" <?php if($_G['setting']['visitedforums']) { ?>id="visitedforums" onmouseover="$('visitedforums').id = 'visitedforumstmp';this.id = 'visitedforums';showMenu({'ctrlid':this.id,'pos':'34'})"<?php } ?> ><a href="forum.php">返&nbsp;回</a></span>
 <?php if(!$_GET['archiveid']) { ?><a href="javascript:;" id="newspecial" onmouseover="$('newspecial').id = 'newspecialtmp';this.id = 'newspecial';showMenu({'ctrlid':this.id})"<?php if(!$_G['forum']['allowspecialonly'] && empty($_G['forum']['picstyle']) && !$_G['forum']['threadsorts']['required']) { ?> onclick="showWindow('newthread', 'forum.php?mod=post&action=newthread&fid=<?php echo $_G['fid'];?>')"<?php } else { ?> onclick="location.href='forum.php?mod=post&action=newthread&fid=<?php echo $_G['fid'];?>';return false;"<?php } ?> title="发新帖"><img src="<?php echo IMGDIR;?>/pn_post.png" alt="发新帖" /></a><?php } ?>
 <?php if(!empty($_G['setting']['pluginhooks']['forumdisplay_postbutton_top'])) echo $_G['setting']['pluginhooks']['forumdisplay_postbutton_top'];?>
 </div>
+
 <?php if(($_G['forum']['threadtypes'] && $_G['forum']['threadtypes']['listable']) || count($_G['forum']['threadsorts']['types']) > 0) { ?>
 <ul id="thread_types" class="ttp bm cl">
 <?php if(!empty($_G['setting']['pluginhooks']['forumdisplay_threadtype_inner'])) echo $_G['setting']['pluginhooks']['forumdisplay_threadtype_inner'];?>
@@ -752,19 +692,8 @@ EOF;
 <th colspan="<?php if(!$_GET['archiveid'] && $_G['forum']['ismoderator']) { ?>3<?php } else { ?>2<?php } ?>">
 <?php if(CURMODULE != 'guide') { ?>
 <div class="tf">
-<span id="atarget" <?php if($_G['cookie']['atarget'] > 0) { ?>onclick="setatarget(-1)" class="y atarget_1"<?php } else { ?>onclick="setatarget(1)" class="y"<?php } ?> title="在新窗口中打开帖子">新窗</span>
-<?php if($_GET['specialtype'] == 'reward') { ?>
-<a id="filter_reward" href="javascript:;" class="showmenu xi2<?php if($_GET['rewardtype']) { ?> xw1<?php } ?>" onclick="showMenu(this.id)"><?php if($_GET['rewardtype'] == '') { ?>全部悬赏<?php } elseif($_GET['rewardtype'] == '1') { ?>进行中<?php } elseif($_GET['rewardtype'] == '2') { ?>已解决<?php } ?></a>&nbsp;
-<?php } ?>
 <a id="filter_special" href="javascript:;" class="showmenu xi2<?php if($_GET['specialtype']) { ?> xw1<?php } ?>" onclick="showMenu(this.id)"><?php if($_GET['specialtype'] == 'poll') { ?>投票<?php } elseif($_GET['specialtype'] == 'trade') { ?>商品<?php } elseif($_GET['specialtype'] == 'reward') { ?>悬赏<?php } elseif($_GET['specialtype'] == 'activity') { ?>活动<?php } elseif($_GET['specialtype'] == 'debate') { ?>辩论<?php } else { ?>全部主题<?php } ?></a>&nbsp;						
-<a href="forum.php?mod=forumdisplay&amp;fid=<?php echo $_G['fid'];?>&amp;filter=lastpost&amp;orderby=lastpost<?php echo $forumdisplayadd['lastpost'];?><?php if($_GET['archiveid']) { ?>&amp;archiveid=<?php echo $_GET['archiveid'];?><?php } ?>" class="xi2<?php if($_GET['filter'] == 'lastpost') { ?> xw1<?php } ?>">最新</a>&nbsp;
-<a href="forum.php?mod=forumdisplay&amp;fid=<?php echo $_G['fid'];?>&amp;filter=heat&amp;orderby=heats<?php echo $forumdisplayadd['heat'];?><?php if($_GET['archiveid']) { ?>&amp;archiveid=<?php echo $_GET['archiveid'];?><?php } ?>" class="xi2<?php if($_GET['filter'] == 'heat') { ?> xw1<?php } ?>">热门</a>&nbsp;
-<a href="forum.php?mod=forumdisplay&amp;fid=<?php echo $_G['fid'];?>&amp;filter=hot" class="xi2<?php if($_GET['filter'] == 'hot') { ?> xw1<?php } ?>">热帖</a>&nbsp;
-<a href="forum.php?mod=forumdisplay&amp;fid=<?php echo $_G['fid'];?>&amp;filter=digest&amp;digest=1<?php echo $forumdisplayadd['digest'];?><?php if($_GET['archiveid']) { ?>&amp;archiveid=<?php echo $_GET['archiveid'];?><?php } ?>" class="xi2<?php if($_GET['filter'] == 'digest') { ?> xw1<?php } ?>">精华</a>&nbsp;
-<a id="filter_dateline" href="javascript:;" class="showmenu xi2<?php if($_GET['dateline']) { ?> xw1<?php } ?>" onclick="showMenu(this.id)">更多</a>&nbsp;
-<?php if(empty($_G['forum']['picstyle']) && $_GET['orderby'] == 'lastpost' && (!$_G['setting']['forumseparator'] || !$separatepos) && !$_GET['filter']) { ?>
-<a href="javascript:;" onclick="checkForumnew_btn('<?php echo $_G['fid'];?>')" title="查看更新" class="forumrefresh"></a>
-<?php } if($_GET['filter'] == 'hot') { ?>
+<?php if($_GET['filter'] == 'hot') { ?>
 <script src="<?php echo $_G['setting']['jspath'];?>calendar.js?<?php echo VERHASH;?>" type="text/javascript"></script>
 <span><?php echo $ctime;?></span>
 <img src="<?php echo IMGDIR;?>/date_magnify.png" class="cur1" alt="" id="hottime" value="<?php echo $ctime;?>" fid="<?php echo $_G['fid'];?>" onclick="showcalendar(event, this, false, false, false, false, function(){viewhot(this);});" align="absmiddle" />
@@ -783,8 +712,6 @@ EOF;
 <td class="by">版块/群组</td>
 <?php } ?>
 <td class="by">作者</td>
-<td class="num">回复/查看</td>
-<td class="by">最后发表</td>
 <?php } else { ?>
 <td class="by" colspan="3">
 <a<?php if(empty($_G['cookie']['forumdefstyle'])) { ?> href="forum.php?mod=forumdisplay&amp;fid=<?php echo $_G['fid'];?>&amp;forumdefstyle=yes" class="chked"<?php } else { ?> href="forum.php?mod=forumdisplay&amp;fid=<?php echo $_G['fid'];?>&amp;forumdefstyle=no" class="unchk"<?php } ?> title="图片模式浏览帖子">图片模式</a>
@@ -817,7 +744,7 @@ EOF;
 </tr>
 </tbody>
 <?php } if(!$separatepos || !$_G['setting']['forumseparator']) { ?>
-<tbody id="separatorline" class="emptb"><tr><td class="icn"></td><?php if(!$_GET['archiveid'] && $_G['forum']['ismoderator']) { ?><td class="o"></td><?php } ?><th></th><?php if(CURMODULE == 'guide') { ?><td class="by"></td><?php } ?><td class="by"></td><td class="num"></td><td class="by"></td></tr></tbody>
+<tbody id="separatorline" class="emptb"><tr><td class="icn"></td><?php if(!$_GET['archiveid'] && $_G['forum']['ismoderator']) { ?><td class="o"></td><?php } ?><th></th><?php if(CURMODULE == 'guide') { ?><td class="by"></td><?php } ?><td class="by"></td></tr></tbody>
 <?php } if($_G['forum_threadcount']) { if(empty($_G['forum']['picstyle']) || $_G['cookie']['forumdefstyle']) { if(is_array($_G['forum_threadlist'])) foreach($_G['forum_threadlist'] as $key => $thread) { if($_G['setting']['forumseparator'] == 1 && $separatepos == $key + 1) { ?>
 <tbody id="separatorline">
 <tr class="ts">
@@ -927,11 +854,6 @@ EOF;
 <?php } ?>
 </cite>
 <em><span<?php if($thread['istoday']) { ?> class="xi1"<?php } ?>><?php echo $thread['dateline'];?></span></em>
-</td>
-<td class="num"><a href="forum.php?mod=viewthread&amp;tid=<?php echo $thread['tid'];?>&amp;extra=<?php echo $extra;?>" class="xi2"><?php echo $thread['allreplies'];?></a><em><?php if($thread['isgroup'] != 1) { ?><?php echo $thread['views'];?><?php } else { ?><?php echo $groupnames[$thread['tid']]['views'];?><?php } ?></em></td>
-<td class="by">
-<cite><?php if($thread['lastposter']) { ?><a href="<?php if($thread['digest'] != -2) { ?>home.php?mod=space&username=<?php echo $thread['lastposterenc'];?><?php } else { ?>forum.php?mod=viewthread&tid=<?php echo $thread['tid'];?>&page=<?php echo max(1, $thread['pages']);; } ?>" c="1"><?php echo $thread['lastposter'];?></a><?php } else { ?><?php echo $_G['setting']['anonymoustext'];?><?php } ?></cite>
-<em><a href="<?php if($thread['digest'] != -2 && !$thread['ordertype']) { ?>forum.php?mod=redirect&tid=<?php echo $thread['tid'];?>&goto=lastpost<?php echo $highlight;?>#lastpost<?php } else { ?>forum.php?mod=viewthread&tid=<?php echo $thread['tid'];?><?php if(!$thread['ordertype']) { ?>&page=<?php echo max(1, $thread['pages']);; } } ?>"><?php echo $thread['lastpost'];?></a></em>
 </td>
 </tr>
 </tbody>
@@ -1446,7 +1368,6 @@ EOF;
 <?php if(!empty($_G['setting']['pluginhooks']['forumdisplay_bottom'])) echo $_G['setting']['pluginhooks']['forumdisplay_bottom'];?>
 <!--[diy=diyforumdisplaybottom]--><div id="diyforumdisplaybottom" class="area"></div><!--[/diy]-->
 </div>
-
 <?php if($_G['forum']['allowside']) { ?>
 <div class="sd">
 <?php if(!empty($_G['setting']['pluginhooks']['forumdisplay_side_top'])) echo $_G['setting']['pluginhooks']['forumdisplay_side_top'];?>
